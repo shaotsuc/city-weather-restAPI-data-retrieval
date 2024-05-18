@@ -10,6 +10,8 @@ load_dotenv()
 ## URL & authentication
 apik = os.environ.get('apikey')
 base_url = 'https://api.weatherapi.com/v1/current.json'
+
+## city list 
 city = ['Paris', 'London','New York', 'Tokyo', 'Los Angeles', 'Liverpool', 'Amsterdam', 'Brooklyn', 'Berlin', 'Munich', 'Hamburg', 'Taipei']
 
 
@@ -25,9 +27,8 @@ for c in city:
         break
     i += 1
         
-# desired data
+    ## desired data
     weather = {
-    # for w in weather:
                 'city': df['location.name'][0],
                 'country': df['location.country'][0],
                 'local_time': df['location.localtime'][0],
@@ -43,11 +44,12 @@ for c in city:
                 'uv': df['current.uv'][0]
                 }
 
+    ## get column names
     columns = []
     for l in weather:
         columns.append(l)
 
-    # get desired columns
+    ## load data into csv
     file_exists = os.path.isfile("weather_data.csv")
     with open('weather_data.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=columns)
