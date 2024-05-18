@@ -1,6 +1,6 @@
-## Rest API - Get Weather data
+# Rest API - Get Weather data
 
-# API Source
+## API Source
 WeatherAPI.com
 
 | Library  |
@@ -10,5 +10,5 @@ WeatherAPI.com
 | csv      |
 | requests |
 
-# Description
+## Description
 This project uses Python to get weather data from API. Transformed from json to csv.
