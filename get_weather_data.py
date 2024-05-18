@@ -48,8 +48,8 @@ for c in city:
         columns.append(l)
 
     # get desired columns
-    file_exists = os.path.isfile("weather_cleaned_data.csv")
-    with open('weather_cleaned_data.csv', 'a', newline='') as f:
+    file_exists = os.path.isfile("weather_data.csv")
+    with open('weather_data.csv', 'a', newline='') as f:
         writer = csv.DictWriter(f, fieldnames=columns)
 
         if not file_exists:
