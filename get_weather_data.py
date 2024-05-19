@@ -4,12 +4,15 @@ import requests
 import pandas as pd
 import json
 import csv
-import geonamescache
+
+
 load_dotenv()
+
 
 ## URL & authentication
 apik = os.environ.get('apikey')
 base_url = 'https://api.weatherapi.com/v1/current.json'
+
 
 ## city list 
 city = ['Paris', 'London','New York', 'Tokyo', 'Los Angeles', 'Liverpool', 'Amsterdam', 'Brooklyn', 'Berlin', 'Munich', 'Hamburg', 'Taipei']
@@ -44,10 +47,12 @@ for c in city:
                 'uv': df['current.uv'][0]
                 }
 
+
     ## get column names
     columns = []
     for l in weather:
         columns.append(l)
+
 
     ## load data into csv
     file_exists = os.path.isfile("weather_data.csv")
