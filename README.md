@@ -6,8 +6,6 @@ WeatherAPI.com
 | Library  |
 | -------- |
 | Pandas   |
-| json     |
-| csv      |
 | requests |
 
 ## Description
