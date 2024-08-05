@@ -12,7 +12,12 @@ base_url = 'https://api.weatherapi.com/v1/current.json'
 
 
 ## city list 
-city = ['Paris', 'London','New York', 'Tokyo', 'Los Angeles', 'Liverpool', 'Amsterdam', 'Brooklyn', 'Berlin', 'Munich', 'Hamburg', 'Taipei']
+city = []
+
+with open('cities.txt', 'r') as f:
+    data = f.read().splitlines()
+    for i in data:
+        city.append(i)
 
 ## data transformation
 i = 0
