@@ -8,7 +8,7 @@ load_dotenv()
 
 ## URL & authentication
 apik = os.environ.get('apikey')
-base_url = 'https://api.weatherapi.com/v1/current.json'
+BASE_URL = 'https://api.weatherapi.com/v1/current.json'
 
 
 ## city list 
@@ -23,7 +23,7 @@ with open('cities.txt', 'r') as f:
 i = 0
 for c in city:
     if i < len(city):
-        url = f"{base_url}?key={apik}&q={city[i]}"
+        url = f"{BASE_URL}?key={apik}&q={city[i]}"
         api_output = requests.get(url).json()
         data = pd.json_normalize(api_output)
 
