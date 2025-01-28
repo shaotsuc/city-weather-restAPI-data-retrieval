@@ -1,37 +1,19 @@
-# Rest API & ELT Project | City Weather data
+# City Weather Data Extraction and Analysis Pipeline
 
 <br>
 
 ## Objectives
-The main goal for me is to practice the ETL/ELT process of getting data via RestAPI with Python and its libraries, allowing it to load into DWH and transform to build a data model using dbt.
+The aim of this project is to build a data pipeline to perform ETL/ELT by extracting weather data via API, loading it into BigQuery using Python, and orchestrating the process with Airflow. Then, I’ll transform the raw data and create a data model using dbt in BigQuery.
 
 <br>
 
-## Project Overview
-### City Weather API Source
-The city weather data is getting from WeatherAPI.com. Authentication method is API key.
-
-### Python Library Used
-| Main Library  |
-| ------------- |
-| Pandas        |
-| requests      |
-| python-dotenv |
-| os            |
-
-### Weather Data Pipeline
-![Weather Data Pipeline](media/weather_data.svg)
+## Data Pipeline
+![data-pipeline](media/weather_etl.gif)
 
 <br><br>
 
-## Loaded into BigQuery 
-After extracting the desired cities weather, I loaded into BigQuery as a seed file.
-![Screenshot of BigQuery](media/load_into_DWH.png)
-
-<br>
-
 ## Transforming in dbt
-After loading into BigQuery, it’s time to transform the seed dataset into staging  dataset. Then logically, I could do more data models based on the business requirements.
+After loading into BigQuery, it's time to transform the seed dataset into staging dataset. Then logically, I could do more data models based on the business requirements.
 
 ```sql
 -- stg_city_weather data model
@@ -95,7 +77,3 @@ FROM {{ source('city_weather', 'seed_city_weather') }}
 WHERE location_name != '1006'
 
 ```
-<br>
-
-### Staging City Weather table
-![Staging City Weather table](media/stg_city_weather.png)
