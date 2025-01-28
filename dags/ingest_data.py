@@ -1,7 +1,9 @@
 import os, requests, pandas as pd, pandas_gbq as gbq
 from datetime import datetime, timedelta
+
 from google.cloud import bigquery
 from google.api_core.exceptions import Conflict
+
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
@@ -22,7 +24,7 @@ table_name = 'raw_weather_data'
 
 
 
-def bq_dataset_connection():
+def bq_dataset_connection(dataset_name):
     """Build connection to dataset in BiqQuery
     
         1. check if the dataset exists
@@ -40,7 +42,7 @@ def bq_dataset_connection():
 
 
 ## data transformation
-def extract_data():
+def extract_data(URL, project_id, dataset_name, table_name):
     """Get weather data via Rest API
 
         1. get daily weather data
@@ -66,7 +68,7 @@ def extract_data():
             print('There is some error when loading the data')
 
     else:
-        print("Error in API call.")
+        print(f'Error code: {raw_result.status_code} in API call.')
 
 
 default_args = {
@@ -88,6 +90,9 @@ with DAG(
     check_dataset = PythonOperator(
         task_id='check_dataset_in_bq',
         python_callable=bq_dataset_connection,
+        op_kwargs={
+         'dataset_name': dataset_name,
+        }
     )
 
 
@@ -95,6 +100,12 @@ with DAG(
     etl_data = PythonOperator(
         task_id='etl_data_execution',
         python_callable=extract_data,
+        op_kwargs={
+         'URL': URL,
+         'project_id':project_id,
+         'dataset_name':dataset_name,
+         'table_name':table_name
+        }
     )
 
 
