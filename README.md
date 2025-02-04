@@ -16,13 +16,13 @@ The aim of this project is to build a data pipeline to perform ETL/ELT by extrac
 After loading into BigQuery, it's time to transform the seed dataset into staging dataset. Then logically, I could do more data models based on the business requirements.
 
 ```sql
--- stg_city_weather data model
-{{ 
-    config(
-            materialized='table',
-            schema='city_weather'
-        ) 
-}}
+-- data model
+{{ config(
+    
+    materialized = 'table',
+    schema = 'data_mart'
+
+) }}
 
 
 SELECT
@@ -32,7 +32,8 @@ SELECT
     location_lat AS latitude,
     location_lon AS longitude, 
     location_tz_id AS timezone,
-    location_localtime AS local_time,
+    FORMAT_DATETIME("%Y-%m-%d %H:%M:%S", location_localtime) AS localtime,
+    FORMAT_DATETIME("%Y-%m-%d %H:%M:%S", current_last_updated) AS last_update_time,
     current_temp_c AS temp_c,
     current_temp_f AS temp_f,
     current_feelslike_c AS feel_like_temp_c,
@@ -72,8 +73,6 @@ SELECT
     current_precip_mm AS precipitation_mm,
     current_precip_in AS precipitation_in,
     current_humidity AS humidity,
-
-FROM {{ source('city_weather', 'seed_city_weather') }}
-WHERE location_name != '1006'
+FROM {{ source('raw', 'raw_weather_data') }}
 
 ```

@@ -56,7 +56,11 @@ def extract_data(URL, project_id, dataset_name, table_name):
     if raw_result.status_code == 200:
         raw_data = pd.json_normalize(raw_result.json())
 
+        ## column name and datetime type transformation
         raw_data.columns = raw_data.columns.str.replace('.', '_')
+        raw_data['current_last_updated'] = pd.to_datetime(raw_data['current_last_updated'])
+        raw_data['location_localtime'] = pd.to_datetime(raw_data['location_localtime'])
+
 
         ## loading dataframe into BQ
         try:
